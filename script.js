@@ -2,7 +2,7 @@ let isRecording = false;
 const speechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
 const recognition = new speechRecognition();
 recognition.continuous = true;
-recognition.interimResults = true;
+recognition.interimResults = false;
 
 const recordButton = document.getElementById('recordButton');
 const speechToText = document.getElementById('speechToText');
@@ -25,6 +25,7 @@ recognition.onresult = (event) => {
     const current = event.resultIndex;
     const transcript = event.results[current][0].transcript;
     speechToText.value += transcript;
+    console.log(transcript)
 };
 
 function sendToChatGPT(text) {

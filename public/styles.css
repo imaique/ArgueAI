@@ -17,3 +17,16 @@ textarea {
     margin-top: 10px;
     height: 100px;
 }
+
+.header-content{
+    justify-content:space-between;
+}
+
+.card-img-top{
+    width: 100px;
+    height: 100px;
+}
+
+.textarea{
+    margin-top: 10px;
+}

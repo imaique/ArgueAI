@@ -2,9 +2,11 @@
   "name": "argueai",
   "version": "1.0.0",
   "description": "An AI that helps you win any argument!",
-  "main": "index.html",
+  "main": "chatgpt.js",
+  "type": "module",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": ""
   },
   "repository": {
     "type": "git",

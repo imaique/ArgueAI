@@ -28,6 +28,29 @@ function speak(text) {
 
 // Body Component
 function Body() {
+  const data = [
+    { id: 1, name: "John", score: 5500 },
+    { id: 2, name: "Alice", score: 4530 },
+    { id: 3, name: "Bob", score: 4030 },
+    { id: 4, name: "Eva", score: 4002 },
+    { id: 5, name: "Charlie", score: 3807 },
+    { id: 6, name: "Sophia", score: 3700 },
+    { id: 7, name: "Daniel", score: 3211 },
+    { id: 8, name: "Olivia", score: 2020 },
+    { id: 9, name: "Liam", score: 1800 },
+    { id: 10, name: "Emma", score: 1000 },
+  ];
+
+  const generateRows = () => {
+    return data.map((item) => (
+      <div className="row p-2" key={`n${item.id}`}>
+        <div className="col-2">{item.id}</div>
+        <div className="col-7">{item.name}</div>
+        <div className="col-3">{item.score}</div>
+      </div>
+    ));
+  };
+
   const cardStyle = {
     width: "40rem",
     height: "15rem",
@@ -41,8 +64,8 @@ function Body() {
   const leaderboardStyle = {
     width: "30rem",
     height: "40rem",
-    backgroundColor: "rgba(90, 8, 8, 0.5)",
-    borderColor: "#E68f45",
+    backgroundColor: "#e7e5e53b",
+    borderColor: "rgb(90, 8, 8)",
     borderWidth: "7px",
     borderRadius: "60px",
     color: "white",
@@ -68,6 +91,16 @@ function Body() {
   const badFaithButtonStyle = {
     ...buttonStyle,
     backgroundColor: "rgb(107, 50, 24)",
+  };
+
+  const sassyButtonStyle = {
+    ...buttonStyle,
+    backgroundColor: "#A367B1",
+  };
+
+  const factulButtonStyle = {
+    ...buttonStyle,
+    backgroundColor: "#607274",
   };
 
   const [isOpponentTurn, setOpponentTurn] = useState(false);
@@ -196,9 +229,9 @@ function sendToChatGPT(text) {
 
   return (
     <div className="p-5 mb-4 rounded-3">
-      <div className="container-fluid p-5">
+      <div className="container p-5">
         <div class = "row">
-        <div class = "col-8">
+        <div class = "col-5">
           <div className="top container m-2">
             <div className="card" style={cardStyle}>
               <div className="card-body">
@@ -245,6 +278,24 @@ function sendToChatGPT(text) {
                     >
                       Bad Faith
                     </button>
+                    <button
+                      type="button"
+                      className="btn btn-dark btn-rounded"
+                      data-mdb-ripple-init
+                      id="sassy"
+                      style={sassyButtonStyle}
+                    >
+                      Sassy
+                    </button>
+                    <button
+                      type="button"
+                      className="btn btn-dark btn-rounded"
+                      data-mdb-ripple-init
+                      id="factual"
+                      style={factulButtonStyle}
+                    >
+                      Factual
+                    </button>
                   </div>
                 </div>
 
@@ -259,129 +310,18 @@ function sendToChatGPT(text) {
         </div>
 
         <div class="col-2">
-          <div class = "card" style = {leaderboardStyle}>
-            <div class = "card-body">
-              <h1 class = "text-center">Leaderboards</h1>
-              <div class="container" style = {rankingStyle}>
-                <div class = "row p-2" id = "n1">
-                  <div class = "col-2">
-                    1
-                  </div>
-                  <div class = "col-7">
-                    Mark
-                  </div>
-                  <div class = "col-3">
-                    4000
-                  </div>
-                </div>
-                <div class = "row p-2" id = "n2">
-                  <div class = "col-2">
-                    2
-                  </div>
-                  <div class = "col-7">
-                    Mark
-                  </div>
-                  <div class = "col-3">
-                    4000
-                  </div>
-                </div>
-                <div class = "row p-2" id = "n3">
-                  <div class = "col-2">
-                    3
-                  </div>
-                  <div class = "col-7">
-                    Mark
-                  </div>
-                  <div class = "col-3">
-                    4000
-                  </div>
-                </div>
-                <div class = "row p-2" id = "n4">
-                  <div class = "col-2">
-                    4
-                  </div>
-                  <div class = "col-7">
-                    Mark
-                  </div>
-                  <div class = "col-3">
-                    4000
-                  </div>
-                </div>
-                <div class = "row p-2" id = "n5">
-                  <div class = "col-2">
-                    5
-                  </div>
-                  <div class = "col-7">
-                    Mark
-                  </div>
-                  <div class = "col-3">
-                    4000
-                  </div>
-                </div>
-                <div class = "row p-2" id = "n6">
-                  <div class = "col-2">
-                    6
-                  </div>
-                  <div class = "col-7">
-                    Mark
-                  </div>
-                  <div class = "col-3">
-                    4000
-                  </div>
-                </div>
-                <div class = "row p-2" id = "n7">
-                  <div class = "col-2">
-                    7
-                  </div>
-                  <div class = "col-7">
-                    Mark
-                  </div>
-                  <div class = "col-3">
-                    4000
-                  </div>
-                </div>
-                <div class = "row p-2" id = "n8">
-                  <div class = "col-2">
-                    8
-                  </div>
-                  <div class = "col-7">
-                    Mark
-                  </div>
-                  <div class = "col-3">
-                    4000
-                  </div>
-                </div>
-                <div class = "row p-2" id = "n9">
-                  <div class = "col-2">
-                    9
-                  </div>
-                  <div class = "col-7">
-                    Mark
-                  </div>
-                  <div class = "col-3">
-                    4000
-                  </div>
-                </div>
-                <div class = "row p-2" id = "n10">
-                  <div class = "col-2">
-                    10
-                  </div>
-                  <div class = "col-7">
-                    Mark
-                  </div>
-                  <div class = "col-3">
-                    4000
-                  </div>
-                </div>
-              
 
-              
-              </div>
-
-
-            </div>
+        </div>
+        <div className="col-3">
+      <div className="card" style={leaderboardStyle}>
+        <div className="card-body">
+          <h1 className="text-center pb-2">Leaderboards</h1>
+          <div className="container" style={rankingStyle}>
+            {generateRows()}
           </div>
-        </div>  
+        </div>
+      </div>
+    </div>
       </div>      
       </div>
     </div>

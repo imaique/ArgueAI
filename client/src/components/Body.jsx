@@ -1,5 +1,7 @@
-import React from "react";
+import React, {useState} from "react";
+import Button from "./Button";
 
+// Body Component
 function Body() {
   const cardStyle = {
     width: "40rem",
@@ -28,6 +30,8 @@ function Body() {
     backgroundColor: "rgb(107, 50, 24)",
   };
 
+  const [isRecording, setIsRecording] = useState(false);
+
   return (
     <div className="p-5 mb-4 rounded-3">
       <div className="container-fluid p-5">
@@ -35,15 +39,14 @@ function Body() {
           <div className="card" style={cardStyle}>
             <div className="card-body">
               <div className="p-3">
-                <button
-                  type="button"
-                  className="btn btn-danger btn-rounded"
-                  id="recordButton"
+                <Button
+                  className="btn-danger"
                   style={buttonStyle}
+                  id="recordButton"
                   data-mdb-ripple-init
                 >
                   Record
-                </button>
+                </Button>
               </div>
               <div className="container m-2" style={{ borderColor: "black" }}></div>
               <p id="speechToText" style={{ textAlign: "center", fontSize: "1.3rem" }}>
@@ -58,27 +61,24 @@ function Body() {
             <div className="card-body">
               <div className="container">
                 <div className="d-flex gap-3 p-3">
-                  <button
-                    type="button"
-                    className="btn btn-success btn-rounded"
+                  <Button
+                    className="btn-success"
                     style={goodFaithButtonStyle}
-                    data-mdb-ripple-init
                     id="goodFaith"
+                    data-mdb-ripple-init
                   >
                     Good Faith
-                  </button>
-                  <button
-                    type="button"
-                    className="btn btn-dark btn-rounded"
-                    data-mdb-ripple-init
-                    id="badFaith"
+                  </Button>
+                  <Button
+                    className="btn-dark"
                     style={badFaithButtonStyle}
+                    id="badFaith"
+                    data-mdb-ripple-init
                   >
                     Bad Faith
-                  </button>
+                  </Button>
                 </div>
               </div>
-
               <div className="container m-3">
                 <p id="chatGptResponse" style={{ textAlign: "center", fontSize: "1.3rem" }}>
                   Responses appear here...

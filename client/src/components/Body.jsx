@@ -290,7 +290,7 @@ function sendToChatGPT(text) {
 
                     >
                       Bad Faith
-                    </button>
+                    </Button>
                     <button
                       type="button"
                       className="btn btn-dark btn-rounded"

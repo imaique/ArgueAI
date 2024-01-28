@@ -122,17 +122,21 @@ function Body() {
         const transcript = event.results[current][0].transcript;
         const speakerTranscriptValue = speakerTranscript + transcript
         console.log(speakerTranscriptValue)
-        setSpeakerTranscript(speakerTranscriptValue);
-        console.log(isOpponentTurn);
-        if (isOpponentTurn) {
-          setSpeechToTextTextboxText(speakerTranscriptValue)
-          if (saidTriggerStart(speakerTranscriptValue)) getRebuttal();
-        } else if(saidTriggerEnd(speakerTranscriptValue)) {
-            startListening();
-            console.log("LISTEN")
-        }
-        console.log("event")
 
+        let finalRebut = null
+        console.log(isOpponentTurn)
+        if (isOpponentTurn) {
+          finalRebut = saidTriggerStart(speakerTranscriptValue);
+          if (finalRebut) getRebuttal();
+          else {
+            setSpeakerTranscript(speakerTranscriptValue)
+            setSpeechToTextTextboxText(speakerTranscriptValue)
+          }
+        } else {
+          finalRebut = saidTriggerEnd(speakerTranscriptValue)
+          if(finalRebut) startListening()
+          else setSpeakerTranscript(speakerTranscriptValue);
+        }
     };
     // Add other initialization code here, if necessary
 });
@@ -152,9 +156,11 @@ function saidTrigger(input, triggers) {
   console.log(input)
   input = input.toLowerCase();
   for (let trigger of triggers) {
-      if(strEndsWith(input,trigger)) return true
+      if(strEndsWith(input,trigger)) {
+        return input.substring(0, input.length - trigger.length)
+      }
   }
-  return false
+  return null
 }
 
 function saidTriggerEnd(input) {

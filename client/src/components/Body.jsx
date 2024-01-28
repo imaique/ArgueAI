@@ -7,7 +7,6 @@ recognition.continuous = true;
 recognition.interimResults = false;
 recognition.start();
 
-console.log(process.env.REACT_APP_API_KEY )
 
 
 function getGPTContext(modifier) {
@@ -88,14 +87,17 @@ function Body() {
         const current = event.resultIndex;
         const transcript = event.results[current][0].transcript;
         const speakerTranscriptValue = speakerTranscript + transcript
+        console.log(speakerTranscriptValue)
         setSpeakerTranscript(speakerTranscriptValue);
-        console.log(transcript);
+        console.log(isOpponentTurn);
         if (isOpponentTurn) {
           setSpeechToTextTextboxText(speakerTranscriptValue)
           if (saidTriggerStart(speakerTranscriptValue)) getRebuttal();
         } else if(saidTriggerEnd(speakerTranscriptValue)) {
             startListening();
+            console.log("LISTEN")
         }
+        console.log("event")
 
     };
     // Add other initialization code here, if necessary
@@ -112,6 +114,7 @@ function strEndsWith(str, suffix) {
 }
 
 function saidTrigger(input, triggers) {
+  console.log("input")
   console.log(input)
   input = input.toLowerCase();
   for (let trigger of triggers) {
@@ -151,7 +154,7 @@ function resetSpeakerTranscript() {
   }
 
   function getRebuttal() {
-    if(isEmpty(speakerTranscript)) return
+    //if(isEmpty(speakerTranscript)) return
     setRecordButtonText('Listen');
     sendToChatGPT(speakerTranscript);
     setSpeakerTranscript()
@@ -174,12 +177,12 @@ function sendToChatGPT(text) {
           }
       ]
   };
-  console.log("Bearer "  + process.env.REACT_APP_API_KEY)
+  console.log("sent")
   fetch("https://api.openai.com/v1/chat/completions", {
       method: "POST",
       headers: {
           "Content-Type": "application/json",
-          "Authorization": "Bearer vFkmRGZmMLkBnoyvnXKhT3BlbkFJlreEsJvIoCEmVpbsXHiw"
+          "Authorization": "Bearer " + process.env.REACT_APP_API_KEY
           // Replace API_KEY with your actual API key
       },
       body: JSON.stringify(data)
@@ -198,12 +201,12 @@ function sendToChatGPT(text) {
     <div className="p-5 mb-4 rounded-3">
       <div className="container-fluid p-5">
         <div class = "row">
-        <div class = "col-8">
+        <div class = "col-9">
           <div className="top container m-2">
             <div className="card" style={cardStyle}>
               <div className="card-body">
                 <div className="p-3">
-                  <button
+                  <Button
                     type="button"
                     className="btn btn-danger btn-rounded"
                     id="recordButton"
@@ -212,7 +215,7 @@ function sendToChatGPT(text) {
                     onClick={toggleRecording}
                 >
                     {recordButtonText}
-                  </button>
+                  </Button>
                 </div>
                 <div className="container m-2" style={{ borderColor: "black" }}></div>
                 <p id="speechToText" style={{ textAlign: "center", fontSize: "1.3rem" }}>
@@ -227,30 +230,33 @@ function sendToChatGPT(text) {
               <div className="card-body">
                 <div className="container">
                   <div className="d-flex gap-3 p-3">
-                    <button
+                    <Button
                       type="button"
                       className="btn btn-success btn-rounded"
                       style={goodFaithButtonStyle}
                       data-mdb-ripple-init
                       id="goodFaith"
+                      onClick={() => setCurrentModifier(GaryModifiers.GoodFaith)}
                     >
                       Good Faith
-                    </button>
-                    <button
+                    </Button>
+                    <Button
                       type="button"
                       className="btn btn-dark btn-rounded"
                       data-mdb-ripple-init
                       id="badFaith"
                       style={badFaithButtonStyle}
+                      onClick={() => setCurrentModifier(GaryModifiers.BadFaith)}
+
                     >
                       Bad Faith
-                    </button>
+                    </Button>
                   </div>
                 </div>
 
                 <div className="container m-3">
                   <p id="chatGptResponse" style={{ textAlign: "center", fontSize: "1.3rem" }}>
-                    Responses appear here...
+                  {responseText}
                   </p>
                 </div>
               </div>
@@ -258,7 +264,7 @@ function sendToChatGPT(text) {
           </div>
         </div>
 
-        <div class="col-2">
+        <div class="col-3">
           <div class = "card" style = {leaderboardStyle}>
             <div class = "card-body">
               <h1 class = "text-center">Leaderboards</h1>

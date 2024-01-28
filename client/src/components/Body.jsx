@@ -22,9 +22,10 @@ speechSynthesis.onvoiceschanged = () => {
     chosenVoice = speechSynthesis.getVoices().find(voice => voice.name === "Google US English");
 };
 
-function speak(text) {
+function speak(text, volume) {
   const utterance = new SpeechSynthesisUtterance(text);
   utterance.voice = chosenVoice
+  if(volume) utterance.volume = volume
   speechSynthesis.speak(utterance);
 }
 
@@ -169,6 +170,8 @@ function saidTriggerEnd(input) {
     resetSpeakerTranscript()
     setSpeechToTextTextboxText("")
     setOpponentTurn(true)
+    speak("Listening...")
+  
 }
 
 function resetSpeakerTranscript() {
@@ -180,8 +183,9 @@ function resetSpeakerTranscript() {
   }
 
   function getRebuttal() {
-    //if(isEmpty(speakerTranscript)) return
+    if(isEmpty(speakerTranscript)) return
     setRecordButtonText('Listen');
+    speak("Creating optimal response.", 0.5)
     sendToChatGPT(speakerTranscript);
     setSpeakerTranscript()
     setOpponentTurn(false)
@@ -214,8 +218,9 @@ function sendToChatGPT(text) {
   })
   .then(response => response.json())
   .then(data => {
-      setResponseText(data.choices[0].message.content.trim())
-      speak(responseText);  // Call the speak function to read the response
+      const newResponseText = data.choices[0].message.content.trim()
+      setResponseText(newResponseText)
+      speak(newResponseText);  // Call the speak function to read the response
   })
   .catch((error) => {
       console.error('Error:', error);
@@ -263,27 +268,7 @@ function sendToChatGPT(text) {
               <div className="card-body">
                 <div className="container">
                   <div className="d-flex gap-3 p-3">
-                    <Button
-                      type="button"
-                      className="btn btn-success btn-rounded"
-                      style={goodFaithButtonStyle}
-                      data-mdb-ripple-init
-                      id="goodFaith"
-                      onClick={() => setCurrentModifier(GaryModifiers.GoodFaith)}
-                    >
-                      Good Faith
-                    </Button>
-                    <Button
-                      type="button"
-                      className="btn btn-dark btn-rounded"
-                      data-mdb-ripple-init
-                      id="badFaith"
-                      style={badFaithButtonStyle}
-                      onClick={() => setCurrentModifier(GaryModifiers.BadFaith)}
 
-                    >
-                      Bad Faith
-                    </Button>
                     <button
                       type="button"
                       className="btn btn-dark btn-rounded"

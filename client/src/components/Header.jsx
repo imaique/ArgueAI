@@ -15,7 +15,12 @@ function Header(props) {
             height="100px" width="100px" alt="OpenAI logo"
             style={{cursor: "pointer"}}
             onClick={() => setIsToggled(!isToggled)} />
-            <span className="fs-4">ArgueAI</span>
+            <div style={{display : "block"}}>
+            <div style={{color: "#a93c2b", fontWeight: "bold", visibility: isToggled? "": "hidden"}}>Bad Faith</div>
+            <div className="fs-4" style={{fontWeight: "bold"}}>ArgueAI</div>
+            <div className="fs-4" style={{fontWeight: "bold", visibility: "hidden"}}>a</div>
+
+            </div>
           </a>
         </header>
       </div>

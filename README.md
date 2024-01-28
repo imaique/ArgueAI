@@ -1,2 +1,2 @@
-# ArgueAI
+# ArgueMate
 McHacks Hack

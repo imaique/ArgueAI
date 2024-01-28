@@ -2,6 +2,7 @@ import React, {useState, useEffect} from "react";
 import Button from "./Button";
 import Leaderboard from "./LeaderBoard";
 import Settings from "./Settings";
+import { func } from "prop-types";
 
 
 const speechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
@@ -51,6 +52,9 @@ function Body(props) {
   const [recordButtonText, setRecordButtonText] = useState('Record');
   const [speechToTextTextboxText, setSpeechToTextTextboxText] = useState(`...`);
   const [responseText, setResponseText] = useState(``);
+  const [startTriggers, setStartTriggers] = useState(["let me think", "let me cook"])
+  const [endTriggers, setEndTriggers] = useState(["go ahead"])
+
   const GaryModifiers = {
     BadFaith: "His goal is to “win” every argument rhetorically using any means necessary, he does not mind bending the facts.",
     GoodFaith: "His goal is to try his best to win the argument, using facts if they are available, but will admit if he is dead-wrong",
@@ -113,8 +117,7 @@ function Body(props) {
 
 
 function saidTriggerStart(input) {
-  const triggers = ["let me think", "let me cook"]
-  return saidTrigger(input, triggers)
+  return saidTrigger(input, startTriggers)
 }
 
 function strEndsWith(str, suffix) {
@@ -132,8 +135,7 @@ function saidTrigger(input, triggers) {
 }
 
 function saidTriggerEnd(input) {
-  const triggers = ["go ahead"]
-  return saidTrigger(input, triggers)
+  return saidTrigger(input, endTriggers)
 }
 
 
@@ -207,11 +209,36 @@ function sendToChatGPT(text) {
   });
 }
 
+function removeStartTrigger(removeTrigger) {
+  setStartTriggers(prevStartTriggers => prevStartTriggers.filter(trigger => trigger != removeTrigger))
+}
+
+function removeEndTrigger(removeTrigger) {
+  setEndTriggers(oldEndTriggers => oldEndTriggers.filter(trigger => trigger != removeTrigger))
+}
+
+function addStartTrigger(newTrigger) {
+  setStartTriggers(prevStartTriggers => [...prevStartTriggers, newTrigger.toLowerCase().trim()])
+}
+
+function addEndTrigger(newTrigger) {
+  setEndTriggers(oldEndTriggers => [...oldEndTriggers, newTrigger.toLowerCase().trim()])
+}
+
   return (
     <div className="p-5 mb-4 rounded-3" >
       <Settings isBadFaith={props.isBadFaith}
         argumentStylesSelected={argumentStylesSelected} 
-  onArgumentStyleChange={handleArgumentStyleChange} ></Settings>
+  onArgumentStyleChange={handleArgumentStyleChange}
+
+  startTriggers={startTriggers}
+  removeStartTrigger={removeStartTrigger}
+  addStartTrigger={addStartTrigger} 
+  
+  endTriggers={endTriggers}
+  removeEndTrigger={removeEndTrigger}
+  addEndTrigger={addEndTrigger} 
+  ></Settings>
       <div className="container p-5">
         <div class = "row">
         <div class = "col-5" style={{width: "100%"}}>

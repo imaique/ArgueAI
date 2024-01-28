@@ -13,6 +13,21 @@ function Body() {
     color: "white",
   };
 
+  const leaderboardStyle = {
+    width: "30rem",
+    height: "40rem",
+    backgroundColor: "rgba(90, 8, 8, 0.5)",
+    borderColor: "#E68f45",
+    borderWidth: "7px",
+    borderRadius: "60px",
+    color: "white",
+  }
+
+  const rankingStyle = {    
+    fontSize: "24px",
+
+
+  }
   const buttonStyle = {
     borderColor: "rgb(90, 8, 8)",
     borderWidth: "5px",
@@ -80,60 +95,191 @@ function resetSpeakerTranscript() {
   return (
     <div className="p-5 mb-4 rounded-3">
       <div className="container-fluid p-5">
-        <div className="top container m-2">
-          <div className="card" style={cardStyle}>
-            <div className="card-body">
-              <div className="p-3">
-                <Button
-                  className="btn-danger"
-                  style={buttonStyle}
-                  id="recordButton"
-                  data-mdb-ripple-init
-                >
-                  Record
-                </Button>
-              </div>
-              <div className="container m-2" style={{ borderColor: "black" }}></div>
-              <p id="speechToText" style={{ textAlign: "center", fontSize: "1.3rem" }}>
-                Transcribed text appears here...
-              </p>
-            </div>
-          </div>
-        </div>
-
-        <div className="bottom container m-2 pt-5">
-          <div className="card" style={cardStyle}>
-            <div className="card-body">
-              <div className="container">
-                <div className="d-flex gap-3 p-3">
-                  <Button
-                    className="btn-success"
-                    style={goodFaithButtonStyle}
-                    id="goodFaith"
+        <div class = "row">
+        <div class = "col-9">
+          <div className="top container m-2">
+            <div className="card" style={cardStyle}>
+              <div className="card-body">
+                <div className="p-3">
+                  <button
+                    type="button"
+                    className="btn btn-danger btn-rounded"
+                    id="recordButton"
+                    style={buttonStyle}
                     data-mdb-ripple-init
-                    onClick={() => setCurrentModifier(GaryModifiers.GoodFaith)}
                   >
-                    Good Faith
-                  </Button>
-                  <Button
-                    className="btn-dark"
-                    style={badFaithButtonStyle}
-                    id="badFaith"
-                    data-mdb-ripple-init
-                    onClick={() => setCurrentModifier(GaryModifiers.BadFaith)}
-                  >
-                    Bad Faith
-                  </Button>
+                    Record
+                  </button>
                 </div>
-              </div>
-              <div className="container m-3">
-                <p id="chatGptResponse" style={{ textAlign: "center", fontSize: "1.3rem" }}>
-                  
+                <div className="container m-2" style={{ borderColor: "black" }}></div>
+                <p id="speechToText" style={{ textAlign: "center", fontSize: "1.3rem" }}>
+                  Transcribed text appears here...
                 </p>
               </div>
             </div>
           </div>
+
+          <div className="bottom container m-2 pt-5">
+            <div className="card" style={cardStyle}>
+              <div className="card-body">
+                <div className="container">
+                  <div className="d-flex gap-3 p-3">
+                    <button
+                      type="button"
+                      className="btn btn-success btn-rounded"
+                      style={goodFaithButtonStyle}
+                      data-mdb-ripple-init
+                      id="goodFaith"
+                    >
+                      Good Faith
+                    </button>
+                    <button
+                      type="button"
+                      className="btn btn-dark btn-rounded"
+                      data-mdb-ripple-init
+                      id="badFaith"
+                      style={badFaithButtonStyle}
+                    >
+                      Bad Faith
+                    </button>
+                  </div>
+                </div>
+
+                <div className="container m-3">
+                  <p id="chatGptResponse" style={{ textAlign: "center", fontSize: "1.3rem" }}>
+                    Responses appear here...
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
+
+        <div class="col-3">
+          <div class = "card" style = {leaderboardStyle}>
+            <div class = "card-body">
+              <h1 class = "text-center">Leaderboards</h1>
+              <div class="container" style = {rankingStyle}>
+                <div class = "row p-2" id = "n1">
+                  <div class = "col-2">
+                    1
+                  </div>
+                  <div class = "col-7">
+                    Mark
+                  </div>
+                  <div class = "col-3">
+                    4000
+                  </div>
+                </div>
+                <div class = "row p-2" id = "n2">
+                  <div class = "col-2">
+                    2
+                  </div>
+                  <div class = "col-7">
+                    Mark
+                  </div>
+                  <div class = "col-3">
+                    4000
+                  </div>
+                </div>
+                <div class = "row p-2" id = "n3">
+                  <div class = "col-2">
+                    3
+                  </div>
+                  <div class = "col-7">
+                    Mark
+                  </div>
+                  <div class = "col-3">
+                    4000
+                  </div>
+                </div>
+                <div class = "row p-2" id = "n4">
+                  <div class = "col-2">
+                    4
+                  </div>
+                  <div class = "col-7">
+                    Mark
+                  </div>
+                  <div class = "col-3">
+                    4000
+                  </div>
+                </div>
+                <div class = "row p-2" id = "n5">
+                  <div class = "col-2">
+                    5
+                  </div>
+                  <div class = "col-7">
+                    Mark
+                  </div>
+                  <div class = "col-3">
+                    4000
+                  </div>
+                </div>
+                <div class = "row p-2" id = "n6">
+                  <div class = "col-2">
+                    6
+                  </div>
+                  <div class = "col-7">
+                    Mark
+                  </div>
+                  <div class = "col-3">
+                    4000
+                  </div>
+                </div>
+                <div class = "row p-2" id = "n7">
+                  <div class = "col-2">
+                    7
+                  </div>
+                  <div class = "col-7">
+                    Mark
+                  </div>
+                  <div class = "col-3">
+                    4000
+                  </div>
+                </div>
+                <div class = "row p-2" id = "n8">
+                  <div class = "col-2">
+                    8
+                  </div>
+                  <div class = "col-7">
+                    Mark
+                  </div>
+                  <div class = "col-3">
+                    4000
+                  </div>
+                </div>
+                <div class = "row p-2" id = "n9">
+                  <div class = "col-2">
+                    9
+                  </div>
+                  <div class = "col-7">
+                    Mark
+                  </div>
+                  <div class = "col-3">
+                    4000
+                  </div>
+                </div>
+                <div class = "row p-2" id = "n10">
+                  <div class = "col-2">
+                    10
+                  </div>
+                  <div class = "col-7">
+                    Mark
+                  </div>
+                  <div class = "col-3">
+                    4000
+                  </div>
+                </div>
+              
+
+              
+              </div>
+
+
+            </div>
+          </div>
+        </div>  
+      </div>      
       </div>
     </div>
   );

@@ -291,7 +291,7 @@ function sendToChatGPT(text) {
 
         </div>
         <div className="col-3">
-    {showLeaderboard ? "" :<Leaderboard></Leaderboard>}
+    {showLeaderboard ? <Leaderboard></Leaderboard>:""}
     </div>
       </div>      
       </div>

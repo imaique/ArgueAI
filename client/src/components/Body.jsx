@@ -84,7 +84,7 @@ function Body(props) {
     }
     const context = `You will play as “Gary”. 
     ${modifier} ${personality} You do not need to introduce his response, simply answer as he would. 
-    Gary’s answers are short and concise with a maximum of 2 sentences. Keep in mind that
+    Gary’s answers are short and concise with a maximum of 3 sentences. Keep in mind that
     Gary's answers will be played back in someone's earbud, so use clear, straightforward language
     so that most people will not get stuck on a complicated word.
     The following pieces of texts are points your debate opponent are making.`
@@ -97,6 +97,7 @@ function Body(props) {
         const current = event.resultIndex;
         const transcript = event.results[current][0].transcript;
         const speakerTranscriptValue = speakerTranscript + transcript
+        console.log(transcript)
 
         let finalRebut = null
         if (isOpponentTurn) {

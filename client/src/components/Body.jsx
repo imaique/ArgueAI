@@ -36,7 +36,7 @@ function Body() {
   const [recordButtonText, setRecordButtonText] = useState('');
   const [speechToTextTextboxText, setSpeechToTextTextboxText] = useState('');
   
-  "Responses appear here..."
+  //"Responses appear here..."
 
   const GaryModifiers = {
     BadFaith: "His goal is to “win” every argument rhetorically using any means necessary, he does not mind bending the facts.",
@@ -47,7 +47,7 @@ function Body() {
 
   const toggleRecording = () => {
     if(isOpponentTurn) {
-      getRebuttal
+      getRebuttal()
     } else {
       startListening()
     }
@@ -62,7 +62,7 @@ function Body() {
 
 function resetSpeakerTranscript() {
   console.log("reset")
-  setSpeakerTranscriptTextboxText("");
+  setSpeakerTranscript("");
 }
 
   function isEmpty(value) {
@@ -72,7 +72,7 @@ function resetSpeakerTranscript() {
   function getRebuttal() {
     if(isEmpty(speakerTranscript)) return
     setRecordButtonText('Listen');
-    sendToChatGPT(speakerTranscript);
+    //sendToChatGPT(speakerTranscript);
     setSpeakerTranscript()
     setOpponentTurn(false)
 }

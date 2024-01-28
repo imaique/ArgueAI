@@ -198,7 +198,7 @@ function sendToChatGPT(text) {
     <div className="p-5 mb-4 rounded-3">
       <div className="container-fluid p-5">
         <div class = "row">
-        <div class = "col-9">
+        <div class = "col-8">
           <div className="top container m-2">
             <div className="card" style={cardStyle}>
               <div className="card-body">
@@ -258,7 +258,7 @@ function sendToChatGPT(text) {
           </div>
         </div>
 
-        <div class="col-3">
+        <div class="col-2">
           <div class = "card" style = {leaderboardStyle}>
             <div class = "card-body">
               <h1 class = "text-center">Leaderboards</h1>

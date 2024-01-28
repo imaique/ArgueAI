@@ -206,7 +206,7 @@ function sendToChatGPT(text) {
 
   return (
     <div className="p-5 mb-4 rounded-3" >
-      <Settings></Settings>
+      <Settings isBadFaith={props.isBadFaith}></Settings>
       <div className="container p-5">
         <div class = "row">
         <div class = "col-5" style={{width: "100%"}}>

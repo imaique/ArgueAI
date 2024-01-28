@@ -2,7 +2,7 @@ import React, {useState, useEffect} from "react";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCog } from '@fortawesome/free-solid-svg-icons';
 
-function Settings() {
+function Settings(props) {
     const [showSettings, setShowSettings] = useState(false);
 
     const toggleSettings = () => {
@@ -14,8 +14,8 @@ function Settings() {
         top: '10px',
         right: '10px',
         fontSize: '50px',
-        cursor: 'pointer'
-      };
+        cursor: 'pointer',
+    };
     
       const popupStyle = {
         position: 'absolute',
@@ -29,7 +29,7 @@ function Settings() {
         display: showSettings ? 'block' : 'none' // Show or hide based on state
       };
     return(<>
-    <FontAwesomeIcon icon={faCog} style={settingsStyle} onClick={toggleSettings} />
+    <FontAwesomeIcon icon={faCog} style={{...settingsStyle, color: props.isBadFaith ? "#a93c2b" : ''}} onClick={toggleSettings} />
 
     <div style={popupStyle}>
     {/* Settings content goes here */}

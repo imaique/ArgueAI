@@ -19,7 +19,7 @@ function App() {
     <div>
       <div style={bodyStyle}>
         <Header isToggled={isToggled} setIsToggled={setIsToggled} />
-        <Body />
+        <Body isBadFaith={isToggled}/>
         <Footer />
       </div>
     </div>

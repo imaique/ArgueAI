@@ -1,6 +1,8 @@
 import React, {useState, useEffect} from "react";
 import Button from "./Button";
 import Leaderboard from "./LeaderBoard";
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faCog } from '@fortawesome/free-solid-svg-icons';
 
 const speechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
 const recognition = new speechRecognition();
@@ -27,16 +29,15 @@ function speak(text) {
 }
 
 // Body Component
-function Body() {
-
-
+function Body(props) {
+  console.log(props)
   const cardStyle = {
     width: "100%",
     height: "15rem",
     backgroundColor: "#e7e5e53b",
     borderColor: "rgb(90, 8, 8)",
     borderWidth: "7px",
-    borderRadius: "60px",
+    borderRadius: "20px",
     color: "white",
   };
 
@@ -78,7 +79,32 @@ function Body() {
 };
   const [showLeaderboard, setShowLeaderboard] = useState(false)
 
-  const [currentModifier, setCurrentModifier] = useState(GaryModifiers.BadFaith)
+  const [currentModifier, setCurrentModifier] = useState(props.isBadFaith)
+  const [showSettings, setShowSettings] = useState(false);
+
+  const toggleSettings = () => {
+    setShowSettings(!showSettings);
+  };
+
+  const settingsStyle = {
+    position: 'absolute',
+    top: '10px',
+    right: '10px',
+    fontSize: '50px',
+    cursor: 'pointer'
+  };
+
+  const popupStyle = {
+    position: 'absolute',
+    top: '40px',
+    right: '10px',
+    border: '1px solid #ccc',
+    backgroundColor: 'white',
+    padding: '10px',
+    borderRadius: '5px',
+    boxShadow: '0 2px 5px rgba(0, 0, 0, 0.2)',
+    display: showSettings ? 'block' : 'none' // Show or hide based on state
+  };
 
 
   useEffect(() => {
@@ -86,10 +112,8 @@ function Body() {
         const current = event.resultIndex;
         const transcript = event.results[current][0].transcript;
         const speakerTranscriptValue = speakerTranscript + transcript
-        console.log(speakerTranscriptValue)
 
         let finalRebut = null
-        console.log(isOpponentTurn)
         if (isOpponentTurn) {
           finalRebut = saidTriggerStart(speakerTranscriptValue);
           if (finalRebut) getRebuttal();
@@ -117,8 +141,6 @@ function strEndsWith(str, suffix) {
 }
 
 function saidTrigger(input, triggers) {
-  console.log("input")
-  console.log(input)
   input = input.toLowerCase();
   for (let trigger of triggers) {
       if(strEndsWith(input,trigger)) {
@@ -150,7 +172,6 @@ function saidTriggerEnd(input) {
 }
 
 function resetSpeakerTranscript() {
-  console.log("reset")
   setSpeakerTranscript("");
 }
 
@@ -182,7 +203,6 @@ function sendToChatGPT(text) {
           }
       ]
   };
-  console.log("sent")
   fetch("https://api.openai.com/v1/chat/completions", {
       method: "POST",
       headers: {
@@ -204,6 +224,14 @@ function sendToChatGPT(text) {
 
   return (
     <div className="p-5 mb-4 rounded-3" >
+            <FontAwesomeIcon icon={faCog} style={settingsStyle} onClick={toggleSettings} />
+
+<div style={popupStyle}>
+  {/* Settings content goes here */}
+  <p>Settings</p>
+  {/* You can add form elements or other settings components here */}
+</div>
+
       <div className="container p-5">
         <div class = "row">
         <div class = "col-5" style={{width: "100%"}}>

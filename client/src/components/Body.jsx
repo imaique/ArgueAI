@@ -10,11 +10,9 @@ recognition.continuous = true;
 recognition.interimResults = false;
 recognition.start();
 
+const argumentStyles = ['Humorous','Sarcastic','Aggressive','Factual']
 
 
-function getGPTContext(modifier) {
-  return `You will play as “Gary”. ${modifier} You do not need to introduce his response, simply answer as he would. Gary’s answers are short and concise with a maximum of 2 sentences. The following pieces of texts are points your debate opponent are making.`
-}
 
 let chosenVoice = undefined
 
@@ -31,7 +29,6 @@ function speak(text, volume) {
 
 // Body Component
 function Body(props) {
-  console.log(props)
   const cardStyle = {
     width: "100%",
     minHeight: "15rem",
@@ -59,11 +56,37 @@ function Body(props) {
     GoodFaith: "His goal is to try his best to win the argument, using facts if they are available, but will admit if he is dead-wrong",
 };
   const [showLeaderboard, setShowLeaderboard] = useState(false)
+  const [argumentStylesSelected, setArgumentStylesSelected] = useState({
+    Humorous: false,
+    Sarcastic: false,
+    Aggressive: false,
+    Factual: false
+  });
+  const handleArgumentStyleChange = (style) => {
+    setArgumentStylesSelected(prevStyles => ({
+      ...prevStyles,
+      [style]: !prevStyles[style]
+    }));
+  };
 
-  const [currentModifier, setCurrentModifier] = useState(props.isBadFaith)
-
-
-
+  function getGPTContext(modifier) {
+    let styles = []
+    for(let [style, included] of Object.entries(argumentStylesSelected)) {
+      if(included) styles.push(style)
+    }
+    let personality = ""
+    if(styles.length > 0) {
+      personality = "Gary's argumentative style is " + argumentStyles.join(',') + "."
+    }
+    const context = `You will play as “Gary”. 
+    ${modifier} ${personality} You do not need to introduce his response, simply answer as he would. 
+    Gary’s answers are short and concise with a maximum of 2 sentences. Keep in mind that
+    Gary's answers will be played back in someone's earbud, so use clear, straightforward language
+    so that most people will not get stuck on a complicated word.
+    The following pieces of texts are points your debate opponent are making.`
+    console.log(context)
+    return context
+  }
 
   useEffect(() => {
     recognition.onresult = (event) => {
@@ -156,7 +179,7 @@ function sendToChatGPT(text) {
       messages: [
           {
             "role": "system",
-            "content": getGPTContext(currentModifier)
+            "content": getGPTContext(props.isBadFaith)
           },
           {
               "role": "user",
@@ -186,7 +209,9 @@ function sendToChatGPT(text) {
 
   return (
     <div className="p-5 mb-4 rounded-3" >
-      <Settings isBadFaith={props.isBadFaith}></Settings>
+      <Settings isBadFaith={props.isBadFaith}
+        argumentStylesSelected={argumentStylesSelected} 
+  onArgumentStyleChange={handleArgumentStyleChange} ></Settings>
       <div className="container p-5">
         <div class = "row">
         <div class = "col-5" style={{width: "100%"}}>

@@ -17,6 +17,10 @@ function Settings(props) {
         fontSize: '50px',
         cursor: 'pointer',
     };
+
+    const handleCheckboxChange = (e) => {
+        props.onArgumentStyleChange(e.target.name);
+      };
     
       const popupStyle = {
         color: 'black',
@@ -40,7 +44,7 @@ function Settings(props) {
     <div>
         {argumentStyles.map((style) => (
             <div>
-              <input type="checkbox" id={style} name={style} value={style}/>
+              <input onChange={handleCheckboxChange} type="checkbox" id={style} name={style} value={style}/>
               <label for={style} style={{paddingLeft: "10px"}}>{style}</label>
             </div>
         ))}

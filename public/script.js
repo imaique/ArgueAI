@@ -11,6 +11,13 @@ const chatGptResponse = document.getElementById('chatGptResponse');
 const maxNumSentences = 2;
 const maxNumTokens = 150;
 
+let chosenVoice = undefined
+
+speechSynthesis.onvoiceschanged = () => {
+    chosenVoice = speechSynthesis.getVoices().find(voice => voice.name === "Google US English");
+    console.log(chosenVoice)
+};
+
 
 recordButton.addEventListener('click', () => {
     if (opponentTurn) {
@@ -77,10 +84,9 @@ Gator Party unique is the effort that we are putting into student interest.`
 
 
 function speak(text) {
-    const voice = speechSynthesis.getVoices().find(voice => voice.name === "Google US English");
-console.log(speechSynthesis.getVoices())
     const utterance = new SpeechSynthesisUtterance(text);
-    speechSynthesis.speak(utterance, voice);
+    utterance.voice = chosenVoice
+    speechSynthesis.speak(utterance);
 }
 
 function sendToChatGPT(text) {

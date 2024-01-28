@@ -13,6 +13,8 @@ const maxNumTokens = 150;
 
 
 recordButton.addEventListener('click', () => {
+    const buttonWidth = recordButton.offsetWidth;
+    console.log(buttonWidth)
     if (isRecording) {
         recognition.stop();
         recordButton.textContent = 'Record';

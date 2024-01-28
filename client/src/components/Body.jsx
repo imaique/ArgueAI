@@ -31,7 +31,7 @@ function Body() {
 
 
   const cardStyle = {
-    width: "40rem",
+    width: "100%",
     height: "15rem",
     backgroundColor: "#e7e5e53b",
     borderColor: "rgb(90, 8, 8)",
@@ -203,10 +203,10 @@ function sendToChatGPT(text) {
 }
 
   return (
-    <div className="p-5 mb-4 rounded-3">
+    <div className="p-5 mb-4 rounded-3" >
       <div className="container p-5">
         <div class = "row">
-        <div class = "col-5">
+        <div class = "col-5" style={{width: "100%"}}>
           <div className="top container m-2">
             <div className="card" style={cardStyle}>
               <div className="card-body">

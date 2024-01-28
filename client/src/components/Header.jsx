@@ -18,7 +18,7 @@ function Header(props) {
             <div style={{display : "block"}}>
             <div style={{color: "#a93c2b", fontWeight: "bold", visibility: isToggled? "": "hidden"}}>Bad Faith</div>
             <div className="fs-4" style={{fontWeight: "bold"}}>ArgueAI</div>
-            <div className="fs-4" style={{fontWeight: "bold", visibility: "hidden"}}>a</div>
+            <div style={{color: isToggled ? "#a93c2b" : "#ffcd30", fontWeight: "bold"}}>{isToggled ? "Never lose another argument" : "Win more arguments"}</div>
 
             </div>
           </a>

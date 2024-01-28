@@ -9,6 +9,7 @@ function App() {
 
   const bodyStyle = {
     backgroundColor: isToggled ? 'black' : '#9e1800',
+    color: "white",
     padding: '5px',
     marginBottom: '4px',
     borderRadius: '3px',

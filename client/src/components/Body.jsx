@@ -34,7 +34,7 @@ function Body(props) {
   console.log(props)
   const cardStyle = {
     width: "100%",
-    height: "15rem",
+    minHeight: "15rem",
     backgroundColor: "#e7e5e53b",
     borderColor: "rgb(90, 8, 8)",
     borderWidth: "7px",
@@ -49,31 +49,11 @@ function Body(props) {
     color: "white",
   };
 
-  const goodFaithButtonStyle = {
-    ...buttonStyle,
-    backgroundColor: "#E48F45",
-  };
-
-  const badFaithButtonStyle = {
-    ...buttonStyle,
-    backgroundColor: "rgb(107, 50, 24)",
-  };
-
-  const sassyButtonStyle = {
-    ...buttonStyle,
-    backgroundColor: "#A367B1",
-  };
-
-  const factulButtonStyle = {
-    ...buttonStyle,
-    backgroundColor: "#607274",
-  };
-
   const [isOpponentTurn, setOpponentTurn] = useState(false);
   const [speakerTranscript, setSpeakerTranscript] = useState('');
   const [recordButtonText, setRecordButtonText] = useState('Record');
-  const [speechToTextTextboxText, setSpeechToTextTextboxText] = useState('');
-  const [responseText, setResponseText] = useState('Responses appear here...');
+  const [speechToTextTextboxText, setSpeechToTextTextboxText] = useState(`...`);
+  const [responseText, setResponseText] = useState(``);
   const GaryModifiers = {
     BadFaith: "His goal is to “win” every argument rhetorically using any means necessary, he does not mind bending the facts.",
     GoodFaith: "His goal is to try his best to win the argument, using facts if they are available, but will admit if he is dead-wrong",
@@ -211,6 +191,7 @@ function sendToChatGPT(text) {
         <div class = "row">
         <div class = "col-5" style={{width: "100%"}}>
           <div className="top container m-2">
+            <h3>Opposing Point Transcript</h3>
             <div className="card" style={cardStyle}>
               <div className="card-body">
                 <div className="p-3">
@@ -234,32 +215,9 @@ function sendToChatGPT(text) {
           </div>
 
           <div className="bottom container m-2 pt-5">
+            <h3>Optimal Response</h3>
             <div className="card" style={cardStyle}>
               <div className="card-body">
-                <div className="container">
-                  <div className="d-flex gap-3 p-3">
-
-                    <button
-                      type="button"
-                      className="btn btn-dark btn-rounded"
-                      data-mdb-ripple-init
-                      id="sassy"
-                      style={sassyButtonStyle}
-                    >
-                      Sassy
-                    </button>
-                    <button
-                      type="button"
-                      className="btn btn-dark btn-rounded"
-                      data-mdb-ripple-init
-                      id="factual"
-                      style={factulButtonStyle}
-                    >
-                      Factual
-                    </button>
-                  </div>
-                </div>
-
                 <div className="container m-3">
                   <p id="chatGptResponse" style={{ textAlign: "center", fontSize: "1.3rem" }}>
                   {responseText}

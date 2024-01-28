@@ -3,6 +3,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCog } from '@fortawesome/free-solid-svg-icons';
 
 function Settings(props) {
+    const argumentStyles = ['Humorous','Sarcastic','Aggressive','Factual']
     const [showSettings, setShowSettings] = useState(false);
 
     const toggleSettings = () => {
@@ -18,6 +19,7 @@ function Settings(props) {
     };
     
       const popupStyle = {
+        color: 'black',
         position: 'absolute',
         top: '40px',
         right: '10px',
@@ -33,7 +35,16 @@ function Settings(props) {
 
     <div style={popupStyle}>
     {/* Settings content goes here */}
-    <p>Settings</p>
+    <h2 style={{fontWeight: "bold"}}>Settings</h2>
+    <h3>Argument Styles</h3>
+    <div>
+        {argumentStyles.map((style) => (
+            <div>
+              <input type="checkbox" id={style} name={style} value={style}/>
+              <label for={style} style={{paddingLeft: "10px"}}>{style}</label>
+            </div>
+        ))}
+    </div>
     {/* You can add form elements or other settings components here */}
     </div>
 </>)

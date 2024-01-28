@@ -1,4 +1,3 @@
-let opponentTurn = false;
 const speechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
 const recognition = new speechRecognition();
 recognition.continuous = true;
@@ -6,12 +5,7 @@ recognition.interimResults = false;
 
 recognition.start();
 
-const GaryModifiers = {
-    BadFaith: "His goal is to “win” every argument rhetorically using any means necessary, he does not mind bending the facts.",
-    GoodFaith: "His goal is to try his best to win the argument, using facts if they are available, but will admit if he is dead-wrong",
-};
 
-let currentModifier = GaryModifiers.BadFaith
 
 const recordButton = document.getElementById('recordButton');
 const speechToText = document.getElementById('speechToText');
@@ -28,47 +22,6 @@ speechSynthesis.onvoiceschanged = () => {
     chosenVoice = speechSynthesis.getVoices().find(voice => voice.name === "Google US English");
 };
 
-goodFaithButton.addEventListener('click', () => {
-    currentModifier = GaryModifiers.GoodFaith
-    console.log("good faith")
-})
-
-badFaithButton.addEventListener('click', () => {
-    currentModifier = GaryModifiers.BadFaith
-})
-
-recordButton.addEventListener('click', () => {
-    if (opponentTurn) {
-        getRebuttal()
-    } else {
-        startListening()
-    }
-});
-
-function startListening() {
-    recordButton.textContent = 'Stop Listening';
-    resetSpeakerTranscript()
-    speechToText.textContent = "";
-
-    opponentTurn = true
-}
-function resetSpeakerTranscript() {
-    console.log("reset")
-    speakerTranscript = "";
-}
-
-function isEmpty(value) {
-    return (value == null || (typeof value === "string" && value.trim().length === 0));
-  }
-
-function getRebuttal() {
-    if(isEmpty(speakerTranscript)) return
-    recordButton.textContent = 'Listen';
-    sendToChatGPT(speakerTranscript);
-    resetSpeakerTranscript()
-    opponentTurn = false
-
-}
 
 function saidTriggerStart(input) {
     const triggers = ["let me think", "let me cook"]

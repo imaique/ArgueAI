@@ -1,0 +1,42 @@
+*{
+    font-family: 'Roboto Mono', monospace;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    background-color: #9e1800;
+    background-image: url("https://www.transparenttextures.com/patterns/back-pattern.png");
+}
+
+#container {
+    width: 50%;
+    text-align: center;
+}
+
+textarea {
+    width: 100%;
+    margin-top: 10px;
+    height: 100px;
+}
+
+.header-content{
+    justify-content:space-between;
+}
+
+.card-img-top{
+    width: 100px;
+    height: 100px;
+}
+
+.textarea{
+    margin-top: 10px;
+}
+
+.fs-4{
+    color: white;
+}
+
+footer{
+    color:white;
+}
+

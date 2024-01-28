@@ -4,9 +4,20 @@ const recognition = new speechRecognition();
 recognition.continuous = true;
 recognition.interimResults = false;
 
+recognition.start();
+
+const GaryModifiers = {
+    BadFaith: "His goal is to “win” every argument rhetorically using any means necessary, he does not mind bending the facts.",
+    GoodFaith: "His goal is to try his best to win the argument, using facts if they are available, but will admit if he is dead-wrong",
+};
+
+let currentModifier = GaryModifiers.BadFaith
+
 const recordButton = document.getElementById('recordButton');
 const speechToText = document.getElementById('speechToText');
 const chatGptResponse = document.getElementById('chatGptResponse');
+const goodFaithButton = document.getElementById('goodFaith');
+const badFaithButton = document.getElementById('badFaith');
 
 const maxNumSentences = 2;
 const maxNumTokens = 150;
@@ -15,9 +26,16 @@ let chosenVoice = undefined
 
 speechSynthesis.onvoiceschanged = () => {
     chosenVoice = speechSynthesis.getVoices().find(voice => voice.name === "Google US English");
-    console.log(chosenVoice)
 };
 
+goodFaithButton.addEventListener('click', () => {
+    currentModifier = GaryModifiers.GoodFaith
+    console.log("good faith")
+})
+
+badFaithButton.addEventListener('click', () => {
+    currentModifier = GaryModifiers.BadFaith
+})
 
 recordButton.addEventListener('click', () => {
     if (opponentTurn) {
@@ -25,19 +43,31 @@ recordButton.addEventListener('click', () => {
     } else {
         startListening()
     }
-    opponentTurn = !opponentTurn;
 });
 
 function startListening() {
-    recognition.start();
     recordButton.textContent = 'Stop Listening';
-    speechToText.value = '';
+    resetSpeakerTranscript()
+    speechToText.textContent = "";
+
+    opponentTurn = true
+}
+function resetSpeakerTranscript() {
+    console.log("reset")
+    speakerTranscript = "";
 }
 
+function isEmpty(value) {
+    return (value == null || (typeof value === "string" && value.trim().length === 0));
+  }
+
 function getRebuttal() {
-    recognition.stop();
+    if(isEmpty(speakerTranscript)) return
     recordButton.textContent = 'Listen';
-    sendToChatGPT(speechToText.value);
+    sendToChatGPT(speakerTranscript);
+    resetSpeakerTranscript()
+    opponentTurn = false
+
 }
 
 function saidTriggerStart(input) {
@@ -45,10 +75,14 @@ function saidTriggerStart(input) {
     return saidTrigger(input, triggers)
 }
 
+function strEndsWith(str, suffix) {
+    return str.match(suffix+"$")==suffix;
+}
+
 function saidTrigger(input, triggers) {
     input = input.toLowerCase();
-    for (const trigger in triggers) {
-        if(input.endsWith(trigger)) return true
+    for (let trigger of triggers) {
+        if(strEndsWith(input,trigger)) return true
     }
     return false
 }
@@ -58,24 +92,29 @@ function saidTriggerEnd(input) {
     return saidTrigger(input, triggers)
 }
 
+let speakerTranscript = ""
+
 recognition.onresult = (event) => {
     const current = event.resultIndex;
     const transcript = event.results[current][0].transcript;
-    speechToText.value += transcript;
-    if(saidTriggerWord)
+    speakerTranscript += transcript
     console.log(transcript)
+    console.log(speakerTranscript)
+    if(opponentTurn) speechToText.textContent = speakerTranscript;
+    if(saidTriggerEnd(speakerTranscript)) {
+        startListening();
+    } else if(saidTriggerStart(speakerTranscript)) {
+        getRebuttal();
+    }
 };
 
-const GaryModifiers = {
-    BadFaith: "His goal is to “win” every argument rhetorically using any means necessary, he does not mind bending the facts.",
-    GoodFaith: "His goal is to try his best to win the argument, using facts if they are available, but will admit if he is dead-wrong",
-};
+
 
 function getGPTContext(modifier) {
     return `You will play as “Gary”. ${modifier} You do not need to introduce his response, simply answer as he would. Gary’s answers are short and concise with a maximum of 2 sentences. The following pieces of texts are points your debate opponent are making.`
 }
 
-const fakeprompt = `Also, our administration, one of the things we’d like to work on, is providing representation for our
+const fakeArgument = `Also, our administration, one of the things we’d like to work on, is providing representation for our
 international students, so one of the things we plan to do is work with the Career connections center to
 essentially create greater accessibility to international students so that they feel prepared for the real world, and
 they are able to graduate, because at the end of the day, that’s what we are all here to do. So, I think what makes
@@ -100,7 +139,7 @@ function sendToChatGPT(text) {
             },
             {
                 "role": "user",
-                "content": fakeprompt,
+                "content": speakerTranscript,
             }
         ]
     };
@@ -115,9 +154,8 @@ function sendToChatGPT(text) {
     })
     .then(response => response.json())
     .then(data => {
-        console.log(data)
         responseText = data.choices[0].message.content.trim();
-        chatGptResponse.value =responseText
+        chatGptResponse.textContent =responseText
         speak(responseText);  // Call the speak function to read the response
     })
     .catch((error) => {

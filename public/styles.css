@@ -1,10 +1,7 @@
 body {
     font-family: Arial, sans-serif;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
-    margin: 0;
+    background-color: #9e1800;
+    background-image: url("https://www.transparenttextures.com/patterns/back-pattern.png");
 }
 
 #container {
@@ -29,4 +26,12 @@ textarea {
 
 .textarea{
     margin-top: 10px;
+}
+
+.fs-4{
+    color: white;
+}
+
+footer{
+    color:white;
 }

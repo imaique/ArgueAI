@@ -1,8 +1,8 @@
 import React, {useState, useEffect} from "react";
 import Button from "./Button";
 import Leaderboard from "./LeaderBoard";
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faCog } from '@fortawesome/free-solid-svg-icons';
+import Settings from "./Settings";
+
 
 const speechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
 const recognition = new speechRecognition();
@@ -81,31 +81,8 @@ function Body(props) {
   const [showLeaderboard, setShowLeaderboard] = useState(false)
 
   const [currentModifier, setCurrentModifier] = useState(props.isBadFaith)
-  const [showSettings, setShowSettings] = useState(false);
 
-  const toggleSettings = () => {
-    setShowSettings(!showSettings);
-  };
 
-  const settingsStyle = {
-    position: 'absolute',
-    top: '10px',
-    right: '10px',
-    fontSize: '50px',
-    cursor: 'pointer'
-  };
-
-  const popupStyle = {
-    position: 'absolute',
-    top: '40px',
-    right: '10px',
-    border: '1px solid #ccc',
-    backgroundColor: 'white',
-    padding: '10px',
-    borderRadius: '5px',
-    boxShadow: '0 2px 5px rgba(0, 0, 0, 0.2)',
-    display: showSettings ? 'block' : 'none' // Show or hide based on state
-  };
 
 
   useEffect(() => {
@@ -229,14 +206,7 @@ function sendToChatGPT(text) {
 
   return (
     <div className="p-5 mb-4 rounded-3" >
-            <FontAwesomeIcon icon={faCog} style={settingsStyle} onClick={toggleSettings} />
-
-<div style={popupStyle}>
-  {/* Settings content goes here */}
-  <p>Settings</p>
-  {/* You can add form elements or other settings components here */}
-</div>
-
+      <Settings></Settings>
       <div className="container p-5">
         <div class = "row">
         <div class = "col-5" style={{width: "100%"}}>

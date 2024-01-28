@@ -30,7 +30,52 @@ function Body() {
     backgroundColor: "rgb(107, 50, 24)",
   };
 
+  const [isOpponentTurn, setOpponentTurn] = useState(false);
   const [isRecording, setIsRecording] = useState(false);
+  const [speakerTranscript, setSpeakerTranscript] = useState('');
+  const [recordButtonText, setRecordButtonText] = useState('');
+  const [speechToTextTextboxText, setSpeechToTextTextboxText] = useState('');
+  
+  "Responses appear here..."
+
+  const GaryModifiers = {
+    BadFaith: "His goal is to “win” every argument rhetorically using any means necessary, he does not mind bending the facts.",
+    GoodFaith: "His goal is to try his best to win the argument, using facts if they are available, but will admit if he is dead-wrong",
+};
+
+  const [currentModifier, setCurrentModifier] = useState(GaryModifiers.BadFaith)
+
+  const toggleRecording = () => {
+    if(isOpponentTurn) {
+      getRebuttal
+    } else {
+      startListening()
+    }
+  };
+
+  function startListening() {
+    setRecordButtonText('Stop Listening');
+    resetSpeakerTranscript()
+    setSpeechToTextTextboxText("")
+    setOpponentTurn(true)
+}
+
+function resetSpeakerTranscript() {
+  console.log("reset")
+  setSpeakerTranscriptTextboxText("");
+}
+
+  function isEmpty(value) {
+    return (value == null || (typeof value === "string" && value.trim().length === 0));
+  }
+
+  function getRebuttal() {
+    if(isEmpty(speakerTranscript)) return
+    setRecordButtonText('Listen');
+    sendToChatGPT(speakerTranscript);
+    setSpeakerTranscript()
+    setOpponentTurn(false)
+}
 
   return (
     <div className="p-5 mb-4 rounded-3">
@@ -66,6 +111,7 @@ function Body() {
                     style={goodFaithButtonStyle}
                     id="goodFaith"
                     data-mdb-ripple-init
+                    onClick={() => setCurrentModifier(GaryModifiers.GoodFaith)}
                   >
                     Good Faith
                   </Button>
@@ -74,6 +120,7 @@ function Body() {
                     style={badFaithButtonStyle}
                     id="badFaith"
                     data-mdb-ripple-init
+                    onClick={() => setCurrentModifier(GaryModifiers.BadFaith)}
                   >
                     Bad Faith
                   </Button>
@@ -81,7 +128,7 @@ function Body() {
               </div>
               <div className="container m-3">
                 <p id="chatGptResponse" style={{ textAlign: "center", fontSize: "1.3rem" }}>
-                  Responses appear here...
+                  
                 </p>
               </div>
             </div>
